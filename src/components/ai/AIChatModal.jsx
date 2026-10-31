@@ -683,13 +683,13 @@ export const AIChatModal = ({
 
           <div className="p-4 border-t">
             <div className="flex items-start space-x-2">
-              <Textarea value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder={t('ai_chat_modal_placeholder_user_input')} className="flex-grow resize-none" rows={2} onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSendMessage(); }}} disabled={isLoading || editingMessageId !== null} />
+              <Textarea value={userInput} onChange={(e) => setUserInput(e.target.value)} placeholder={t('ai_chat_modal_placeholder_user_input')} className="flex-grow resize-none" rows={2} onKeyDown={(e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) { e.preventDefault(); handleSendMessage(); }}} disabled={isLoading || editingMessageId !== null} />
               {isLoading ? (
                 <Button onClick={() => abortControllerRef.current?.abort()} variant="destructive" className="h-full" title={t('ai_chat_modal_tooltip_stop_generating')}>
                   <StopCircle className="h-4 w-4 mr-0 sm:mr-2" /> <span className="hidden sm:inline">{t('ai_chat_modal_button_stop')}</span>
                 </Button>
               ) : (
-                <Button onClick={handleSendMessage} disabled={!userInput.trim() || editingMessageId !== null} className="h-full">
+                <Button onClick={handleSendMessage} disabled={!userInput.trim() || editingMessageId !== null} className="h-full" title={t('ai_chat_modal_tooltip_send_message')}>
                   <Send className="h-4 w-4 mr-0 sm:mr-2" /> <span className="hidden sm:inline">{t('ai_chat_modal_button_send_message')}</span>
                 </Button>
               )}
